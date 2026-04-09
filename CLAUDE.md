@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Astro-based blog/portfolio website for Coldfront Games, deployed as a static site on Cloudflare Workers. Based on the Bear Blog theme.
+Astro-based marketing/studio website for Coldfront Games, deployed as a static site on Cloudflare Workers. The site is a single-page layout (`src/pages/index.astro`) with a hero, studio bio, and Dwarfspire game section. It was built from the Bear Blog template but has been extensively redesigned.
 
 ## Commands
 
@@ -21,17 +21,57 @@ npm run cf-typegen # Regenerate Cloudflare Worker types
 
 ## Architecture
 
-**Content pipeline:** Markdown/MDX files in `src/content/blog/` → validated by schema in `src/content.config.ts` (Zod) → rendered via `src/pages/blog/[...slug].astro` → wrapped by `src/layouts/BlogPost.astro`.
+**Main page:** All site content lives in `src/pages/index.astro`. This file contains the full HTML structure, all page-scoped CSS (in a `<style>` block), and all client-side JS (in a `<script>` block). Avoid splitting these into separate files unless there's a strong reason.
 
-**Routing:** File-based via `src/pages/`. The blog listing at `/blog` sorts all posts by `pubDate` descending. Individual posts are generated dynamically via `[...slug].astro`.
+**Content pipeline:** Markdown/MDX files in `src/content/blog/` → validated by schema in `src/content.config.ts` (Zod) → rendered via `src/pages/blog/[...slug].astro` → wrapped by `src/layouts/BlogPost.astro`. Not actively used yet.
 
-**Site-wide constants** (title, description, etc.) live in `src/consts.ts`. Update these when rebranding.
+**Routing:** File-based via `src/pages/`. The blog listing at `/blog` sorts all posts by `pubDate` descending.
 
-**Deployment:** Astro builds static HTML/CSS/JS → Cloudflare adapter packages for Workers → Wrangler deploys. The `wrangler.json` config controls the Workers environment, compatibility date, and observability settings. `public/.assetsignore` controls which assets are excluded from the Cloudflare deployment.
+**Site-wide constants** (title, description) live in `src/consts.ts`.
 
-**Styling:** Single global stylesheet at `src/styles/global.css` using vanilla CSS with custom properties for the color scheme. The Atkinson font is self-hosted in `public/fonts/`.
+**Deployment:** Astro builds static HTML/CSS/JS → Cloudflare adapter packages for Workers → Wrangler deploys. The `wrangler.json` config controls the Workers environment. `public/.assetsignore` controls which assets are excluded from deployment.
 
-**SEO:** `src/components/BaseHead.astro` handles all meta tags, OpenGraph, and Twitter card markup. The site URL in `astro.config.mjs` (currently `"https://example.com"`) must be set correctly for sitemap and RSS feed generation.
+**Styling:** Page styles are scoped inside `src/pages/index.astro`. The global stylesheet at `src/styles/global.css` still exists but most of its rules are overridden by the page-level styles (especially `main`, body font, and layout). Fonts: Google Fonts (Barlow 700/900 + DM Sans) loaded via `<link>` in index.astro; Atkinson is self-hosted in `public/fonts/` but only used by the global CSS fallback.
+
+**SEO:** `src/components/BaseHead.astro` handles all meta tags, OpenGraph, and Twitter card markup. The site URL in `astro.config.mjs` must be set correctly for sitemap and RSS feed generation.
+
+## index.astro structure
+
+### Color palette (CSS variables in `:root`)
+`--white`, `--sky` (#6fc4ef), `--blue` (#1c80cb), `--mid-blue` (#367cc1), `--navy` (#033b8c), `--deep` (#133454). Semantic aliases: `--bg`, `--bg-alt`, `--ink`, `--ink-mid`, `--ink-faint`, `--ice`, `--border`.
+
+### Sections
+- **Header** — fixed, transparent at top (gradient blur), transitions to frosted white on scroll via `.scrolled` class. Contains logo, nav links, EN/FR language toggle, social icons (X, TikTok, Discord, YouTube, Instagram), and hamburger for mobile.
+- **Hero** — full-viewport, dark blue background with UV diagonal parallax (`background-position` animated via `requestAnimationFrame`). Contains an animated logo (`.hero-logo-clip` / `.hero-logo`) and heading text.
+- **Studio** (`#studio`) — two-column grid with label + body copy. Fully translated EN/FR.
+- **Dwarfspire** (`#dwarfspire`) — 5-layer parallax section using `background-position` layers animated on scroll. Dark overlay via `::before`. Contains the Dwarfspire logo image.
+- **Contact** (`#contact`) — hidden (`hidden` attribute), kept for future use.
+- **Footer** — dark blue bar with studio name and tagline.
+- **Mobile menu** — full-screen overlay triggered by hamburger, includes language toggle.
+
+### EN/FR language toggle
+All translatable text elements carry a `data-i18n="key"` attribute. The JS `translations` object maps each key to `{ en, fr }` strings. `applyLang(lang)` sets `textContent` on each element and persists the choice to `localStorage` under `'cf-lang'`. The hero heading is split into three separate `<span>` elements (`hero-line1`, `hero-line2`, `hero-sub`) so that the `.hero-sub` span (blue color) is always in the DOM and Astro's scoped CSS applies correctly. In French, `hero-line2` is set to empty and its wrapper (`.hero-line2-group`) is hidden.
+
+### Parallax
+- **Hero bg**: `requestAnimationFrame` loop animates `background-position` diagonally (UV scroll). Speed constants: `UV_SPEED_X = 18`, `UV_SPEED_Y = 10`, `SCROLL_FACTOR = 0.25`.
+- **Dwarfspire layers**: scroll event listener sets `translateY` on each `.ds-layer` at different speeds (0.05 – 0.48). Layers are absolutely positioned with `inset: -60% 0 -30% 0` to avoid clipping during parallax travel. On narrow viewports, all layers shift left via `clamp(-150px, calc(37.5vw - 270px), 0px)` on background-position X.
+
+## Public assets
+
+```
+public/
+  background.png          # Hero parallax background (tileable)
+  logo_anim.webp          # Animated logo for hero section
+  favicon.svg
+  fonts/                  # Self-hosted Atkinson font (legacy)
+  dwarfspire/
+    logo.png              # Dwarfspire game logo
+    background_0.png      # Parallax layer 0 (back)
+    background_1.png
+    background_2.png
+    background_3.png
+    background_4.png      # Parallax layer 4 (front)
+```
 
 ## Adding Blog Posts
 
