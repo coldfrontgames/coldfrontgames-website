@@ -61,7 +61,7 @@ All translatable text elements carry a `data-i18n="key"` attribute. The JS `tran
 ```
 public/
   background.png          # Hero parallax background (tileable)
-  logo_anim.webp          # Animated logo for hero section
+  logo_anim.webm          # Animated logo for hero section (video, plays once)
   favicon.svg
   fonts/                  # Self-hosted Atkinson font (legacy)
   dwarfspire/
