@@ -372,6 +372,18 @@ import BaseHead from '../../components/BaseHead.astro';
 	.main-nav a:hover,
 	.main-nav a[aria-current="page"] { opacity: 1; }
 
+	.main-nav a:hover { animation: shiver 0.35s ease; }
+
+	@keyframes shiver {
+		0%   { transform: translateX(0) rotate(0deg); }
+		15%  { transform: translateX(-3px) rotate(-1.5deg); }
+		30%  { transform: translateX(3px) rotate(1.5deg); }
+		45%  { transform: translateX(-2px) rotate(-0.8deg); }
+		60%  { transform: translateX(2px) rotate(0.8deg); }
+		75%  { transform: translateX(-1px); }
+		100% { transform: translateX(0) rotate(0deg); }
+	}
+
 	.header-right { display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
 
 	.social-links { display: flex; align-items: center; gap: 0.9rem; }

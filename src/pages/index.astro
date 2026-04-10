@@ -448,7 +448,17 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		opacity: 0.75;
 	}
 
-	.main-nav a:hover { opacity: 1; }
+	.main-nav a:hover { opacity: 1; animation: shiver 0.35s ease; }
+
+	@keyframes shiver {
+		0%   { transform: translateX(0) rotate(0deg); }
+		15%  { transform: translateX(-3px) rotate(-1.5deg); }
+		30%  { transform: translateX(3px) rotate(1.5deg); }
+		45%  { transform: translateX(-2px) rotate(-0.8deg); }
+		60%  { transform: translateX(2px) rotate(0.8deg); }
+		75%  { transform: translateX(-1px); }
+		100% { transform: translateX(0) rotate(0deg); }
+	}
 
 	.header-right {
 		display: flex;
