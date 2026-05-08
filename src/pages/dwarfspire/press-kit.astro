@@ -24,16 +24,15 @@ import BaseHead from '../../components/BaseHead.astro';
 					<a href="/dwarfspire/press-kit" aria-current="page">Dwarfspire</a>
 				</nav>
 				<div class="header-right">
-					<button class="lang-toggle" id="lang-toggle" aria-label="Switch language">
-						<span class="lang-opt" data-lang="en">EN</span>
+					<div class="lang-toggle" id="lang-toggle" role="group" aria-label="Language selection">
+						<button class="lang-opt" data-lang="en">EN</button>
 						<span class="lang-sep">/</span>
-						<span class="lang-opt" data-lang="fr">FR</span>
-					</button>
+						<button class="lang-opt" data-lang="fr">FR</button>
+						<span class="lang-sep">/</span>
+						<button class="lang-opt" data-lang="ja">JA</button>
+					</div>
 					<div class="social-links">
-						<a href="https://x.com/JeuxColdfront" aria-label="X" target="_blank" rel="noopener noreferrer">
-							<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-						</a>
-						<a href="https://www.tiktok.com/@coldfrontgames" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+<a href="https://www.tiktok.com/@coldfrontgames" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
 							<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
 						</a>
 						<a href="https://discord.gg/j3dtdpmEur" aria-label="Discord" target="_blank" rel="noopener noreferrer">
@@ -59,11 +58,13 @@ import BaseHead from '../../components/BaseHead.astro';
 				<a href="/#studio" class="mobile-link">Studio</a>
 				<a href="/dwarfspire/press-kit" class="mobile-link">Dwarfspire</a>
 			</nav>
-			<button class="lang-toggle lang-toggle-mobile" id="lang-toggle-mobile" aria-label="Switch language">
-				<span class="lang-opt" data-lang="en">EN</span>
+			<div class="lang-toggle lang-toggle-mobile" id="lang-toggle-mobile" role="group" aria-label="Language selection">
+				<button class="lang-opt" data-lang="en">EN</button>
 				<span class="lang-sep">/</span>
-				<span class="lang-opt" data-lang="fr">FR</span>
-			</button>
+				<button class="lang-opt" data-lang="fr">FR</button>
+				<span class="lang-sep">/</span>
+				<button class="lang-opt" data-lang="ja">JA</button>
+			</div>
 		</div>
 
 		<main>
@@ -163,32 +164,36 @@ import BaseHead from '../../components/BaseHead.astro';
 	}, { passive: true });
 
 	// ── Language toggle ──
-	const translations: Record<string, { en: string; fr: string }> = {
-		'site-title':      { en: 'COLDFRONT GAMES',  fr: 'JEUX COLDFRONT' },
-		'wishlist-heading':{ en: 'Wishlist Now',      fr: 'Ajouter à la liste de souhaits' },
-		'steam-btn':       { en: 'Wishlist on Steam', fr: 'Liste de souhaits Steam' },
+	const translations: Record<string, { en: string; fr: string; ja: string }> = {
+		'site-title':      { en: 'COLDFRONT GAMES',  fr: 'JEUX COLDFRONT', ja: 'COLDFRONT GAMES' },
+		'wishlist-heading':{ en: 'Wishlist Now',      fr: 'Ajouter à la liste de souhaits', ja: '今すぐウィッシュリストに追加' },
+		'steam-btn':       { en: 'Wishlist on Steam', fr: 'Liste de souhaits Steam', ja: 'Steamでウィッシュリストに追加' },
 		'desc-lead':       {
 			en: 'DWARFSPIRE is an idle crafting game that sits on the side of your screen.',
 			fr: 'DWARFSPIRE est un jeu de idle crafting qui se glisse sur le côté de votre écran.',
+			ja: 'DWARFSPIREは、画面の端に表示されるアイドルクラフトゲームです。',
 		},
 		'desc-p1': {
 			en: 'Manage a village of rock-climbing dwarves as they go on perilous expeditions up the mountainside in search of rare gems and minerals. Use your gathered resources to craft powerful weapons and armor to trade to a wide variety of customers.',
-			fr: 'Gérez votre village de nains grimpeurs alors qu’ils entreprennent de périlleuses expéditions en montagne à la recherche de pierres précieuses et de minéraux rares. Utilisez votre butin pour fabriquer des armes et des armures puissantes à vendre à une grande variété de clients.',
+			fr: "Gérez votre village de nains grimpeurs alors qu'ils entreprennent de périlleuses expéditions en montagne à la recherche de pierres précieuses et de minéraux rares. Utilisez votre butin pour fabriquer des armes et des armures puissantes à vendre à une grande variété de clients.",
+			ja: '岩を登るドワーフの村を管理し、希少な宝石や鉱物を求めて山の斜面を危険な探索へと送り出そう。集めたリソースで強力な武器や防具を作り、さまざまな顧客に売り渡しましょう。',
 		},
 		'desc-p2': {
 			en: 'DWARFSPIRE stays on top of your desktop, allowing you to do other things while your dwarves are hard at work.',
 			fr: 'DWARFSPIRE reste au premier plan de votre écran, vous permettant de vaquer à vos occupations pendant que vos nains travaillent dur.',
+			ja: 'DWARFSPIREはデスクトップ上に常に表示されるため、ドワーフが働いている間も他のことができます。',
 		},
 		'desc-tagline': {
 			en: 'In this idle crafting desktop game they rise while you grind.',
 			fr: 'Dans ce jeu de idle crafting sur bureau, ils grimpent pendant que vous progressez.',
+			ja: 'このアイドルクラフトゲームでは、あなたが頑張るほど彼らも上へと昇っていく。',
 		},
-		'footer-loc': { en: 'Somewhere cold.', fr: 'Quelque part dans le froid.' },
+		'footer-loc': { en: 'Somewhere cold.', fr: 'Quelque part dans le froid.', ja: 'どこか寒い場所。' },
 	};
 
-	let currentLang: 'en' | 'fr' = (localStorage.getItem('cf-lang') as 'en' | 'fr') || 'en';
+	let currentLang: 'en' | 'fr' | 'ja' = (localStorage.getItem('cf-lang') as 'en' | 'fr' | 'ja') || 'en';
 
-	function applyLang(lang: 'en' | 'fr') {
+	function applyLang(lang: 'en' | 'fr' | 'ja') {
 		currentLang = lang;
 		localStorage.setItem('cf-lang', lang);
 		document.documentElement.lang = lang;
@@ -203,10 +208,12 @@ import BaseHead from '../../components/BaseHead.astro';
 		});
 	}
 
-	function handleLangToggle() { applyLang(currentLang === 'en' ? 'fr' : 'en'); }
-
-	document.getElementById('lang-toggle')?.addEventListener('click', handleLangToggle);
-	document.getElementById('lang-toggle-mobile')?.addEventListener('click', handleLangToggle);
+	document.querySelectorAll<HTMLElement>('.lang-opt').forEach(opt => {
+		opt.addEventListener('click', () => {
+			const lang = opt.dataset.lang as 'en' | 'fr' | 'ja';
+			if (lang) applyLang(lang);
+		});
+	});
 
 	applyLang(currentLang);
 
@@ -404,9 +411,6 @@ import BaseHead from '../../components/BaseHead.astro';
 		display: flex;
 		align-items: center;
 		gap: 0.2rem;
-		background: none;
-		border: none;
-		cursor: pointer;
 		padding: 0.25rem 0.4rem;
 		font-family: 'DM Sans', sans-serif;
 		font-size: 0.75rem;
@@ -418,7 +422,21 @@ import BaseHead from '../../components/BaseHead.astro';
 	}
 
 	.lang-toggle:hover { opacity: 1; }
-	.lang-opt { transition: opacity 0.2s; opacity: 0.45; }
+
+	.lang-opt {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		letter-spacing: inherit;
+		color: inherit;
+		transition: opacity 0.2s;
+		opacity: 0.45;
+	}
+
 	.lang-opt.active { opacity: 1; font-weight: 700; }
 	.lang-sep { opacity: 0.35; }
 
