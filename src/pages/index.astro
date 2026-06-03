@@ -113,12 +113,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			</section>
 
 			<!-- ── Dwarfspire ── -->
-			<section id="dwarfspire" class="section section-alt section-parallax">
-				<div class="ds-layer" id="ds-layer-0" aria-hidden="true"></div>
-				<div class="ds-layer" id="ds-layer-1" aria-hidden="true"></div>
-				<div class="ds-layer" id="ds-layer-2" aria-hidden="true"></div>
-				<div class="ds-layer" id="ds-layer-3" aria-hidden="true"></div>
-				<div class="ds-layer" id="ds-layer-4" aria-hidden="true"></div>
+			<section id="dwarfspire" class="section section-alt">
 				<div class="site-wrap dwarfspire-content">
 					<div class="dwarfspire-cta">
 						<img src="/dwarfspire/logo.png" alt="Dwarfspire" class="dwarfspire-logo" />
@@ -197,31 +192,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 	// ── Parallax backgrounds ──
 	const heroBg = document.querySelector('.hero-bg') as HTMLElement | null;
-	const dwarfspireEl = document.getElementById('dwarfspire');
-	const dsLayers = [
-		{ el: document.getElementById('ds-layer-0'), speed: 0.05 },
-		{ el: document.getElementById('ds-layer-1'), speed: 0.12 },
-		{ el: document.getElementById('ds-layer-2'), speed: 0.22 },
-		{ el: document.getElementById('ds-layer-3'), speed: 0.34 },
-		{ el: document.getElementById('ds-layer-4'), speed: 0.48 },
-	];
-
-	// Dwarfspire layer parallax on scroll
-	function updateDwarfspireParallax() {
-		const scrollY = window.scrollY;
-		if (dwarfspireEl) {
-			const rect = dwarfspireEl.getBoundingClientRect();
-			const inView = rect.top < window.innerHeight && rect.bottom > 0;
-			if (inView) {
-				const base = scrollY - (dwarfspireEl.offsetTop - window.innerHeight);
-				dsLayers.forEach(({ el, speed }) => {
-					if (el) el.style.transform = `translateY(${base * speed}px)`;
-				});
-			}
-		}
-	}
-
-	window.addEventListener('scroll', updateDwarfspireParallax, { passive: true });
 
 	// Hero UV diagonal animation via rAF
 	let uvStart: number | null = null;
@@ -723,39 +693,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		background: var(--bg-alt);
 	}
 
-	.section-parallax {
-		position: relative;
-		overflow: hidden;
-		background: none;
-	}
-
-	.ds-layer {
-		position: absolute;
-		inset: -60% 0 -30% 0;
-		will-change: transform;
-		background-size: auto 80%;
-		background-position: left top;
+	#dwarfspire {
+		background-image: url('/dwarfspire/background.png');
+		background-size: cover;
+		background-position: clamp(-250px, calc(20vw - 280px), 0px) center;
 		background-repeat: no-repeat;
-	}
-
-	#ds-layer-0 { background-image: url('/dwarfspire/background_0.png'); z-index: 0; background-position: clamp(-150px, calc(37.5vw - 270px), 0px) 80px; }
-	#ds-layer-1 { background-image: url('/dwarfspire/background_1.png'); z-index: 1; background-position: clamp(-150px, calc(37.5vw - 270px), 0px) top; }
-	#ds-layer-2 { background-image: url('/dwarfspire/background_2.png'); z-index: 2; background-position: clamp(-150px, calc(37.5vw - 270px), 0px) top; }
-	#ds-layer-3 { background-image: url('/dwarfspire/background_3.png'); z-index: 3; background-position: clamp(-150px, calc(37.5vw - 270px), 0px) top; }
-	#ds-layer-4 { background-image: url('/dwarfspire/background_4.png'); z-index: 4; background-position: clamp(-150px, calc(37.5vw - 270px), 0px) -80px; }
-
-	.section-parallax::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: rgba(19, 52, 84, 0.55);
-		z-index: 5;
-		pointer-events: none;
-	}
-
-	.section-parallax .site-wrap {
-		position: relative;
-		z-index: 6;
 	}
 
 	.section-grid {
