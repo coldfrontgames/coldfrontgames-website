@@ -7,6 +7,13 @@
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+	"send_email": [
+		{ "name": "KEY_REQUEST_EMAIL" }
+	],
+	"vars": {
+		"KEY_REQUEST_TO": "coldfrontgamestudio@gmail.com",
+		"KEY_REQUEST_FROM": "noreply@coldfrontgames.ca"
+	},
 	"observability": {
 		"enabled": true
 	},

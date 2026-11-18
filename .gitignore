@@ -200,3 +200,6 @@ dist
 
 ### Astro ###
 .astro/
+
+### Generated press kit archive ###
+public/dwarfspire/Dwarfspire-Press-Images.zip
